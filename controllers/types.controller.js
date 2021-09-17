@@ -5,7 +5,7 @@ function SplitWord(words){
     let newWords = words.split(',').map(word => word.trim());
     return newWords;
 }
-
+//grabs all types from db.
 async function getTypes (req, res) {
     try{
         const types = await Types.find();
@@ -18,6 +18,7 @@ async function getTypes (req, res) {
     }
 }
 
+//gets the spacific type of speech from request parameters.
 async function getType (req, res) {
     try{
         const type = await Types.findOne().select(`${req.params.type.slice(1, req.params.type.length)}`);
@@ -29,6 +30,8 @@ async function getType (req, res) {
     }
 }
 
+//Developer request just to post types.
+//would be private or deleted before launch.
 async function postTypes (req, res) {
 
     const errors = validationResult(req, res);
@@ -38,9 +41,11 @@ async function postTypes (req, res) {
     }
 
     //destructuring request body.
-    const {nouns, verbs, adjectives, adverb, pronoun, preposition, conjunction, determiner, exclamation} = req.body;
+    const {all_types, nouns, verbs, adjectives, adverb, pronoun, preposition, conjunction, determiner, exclamation} = req.body;
 
+    //creates the object before.
     const typeFields = [{
+        all_types: SplitWord(all_types),
         nouns: SplitWord(nouns),
         verbs: SplitWord(verbs),
         adjectives: SplitWord(adjectives),

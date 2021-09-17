@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
 const TypesSchema = new mongoose.Schema({
+    all_types: {
+        type: [String]
+    },
     nouns: {
         type: [String]
     },
